@@ -1,6 +1,3 @@
-# **Google Drive Link**
-https://drive.google.com/drive/folders/1D08TUE-7Jbl2cNmLnid-oX9u14z8g9hm?usp=sharing
-
 # **Off Target Executables**
 * Executables for OT are already compiled and located in the Google Drive provided above. Once in the Google Drive, navigate to your OS folder, and executables are located in the "Old" and "New" folders.
 * The "Old" folder holds the executables for the old version of OT that uses the original compression format of .cspr files.
