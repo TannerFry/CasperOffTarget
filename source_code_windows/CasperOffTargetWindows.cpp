@@ -39,7 +39,7 @@ vector<string> split(string strToSplit, char delimeter)
 int main(int argc, const char * argv[]) {
 	
 	//argv: query file, cspr file, db file, output file, CASPERinfo, num_mismatches, threshold, detailed ouptut (T/F), avg output (T/F)
-	//vector<string> argv = {"C:\\Users\\Tfry\Desktop\\CASPERapp\\OffTargetFolder\\OT_Win.exe", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\OffTargetFolder\\temp.txt", "spCas9", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\mn_OffTargetResults.txt", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\CASPERinfo", "4", "0.05", "TRUE", "FALSE"};
+	//vector<string> argv = { "OT_Win.exe", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\off_input.txt", "spCas9", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\temp_off.txt", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\CASPERinfo", "4", "0.05", "False", "True", "MATRIX:HSU MATRIX-spCas9-2013" };
 	//Convert all input into string objects:
 	string query_file = string(argv[1]);
 	string endo_name = string(argv[2]);
@@ -58,6 +58,8 @@ int main(int argc, const char * argv[]) {
 	if (string(argv[10]).find('T') != string::npos) {
 		average = true;
 	}
+	string hsu = string(argv[11]);
+
 
 	//get seed_length and seq_length from CASPERinfo file using endo on .cspr file
 	ifstream file;
@@ -88,7 +90,7 @@ int main(int argc, const char * argv[]) {
 	otr.LoadTargetQuery(query_file);
 	otr.loadData(cspr_reference, sql_file);
 
-	otr.ScoreSettings(settings_file, output_file, NUM_MISMATCHES, THRESHOLD, detailed, average, cspr_reference, endo_name);
+	otr.ScoreSettings(settings_file, output_file, NUM_MISMATCHES, THRESHOLD, detailed, average, cspr_reference, endo_name, hsu);
 
 	otr.run_off_algorithm(16); // input should be the number of threads you want to generate and the output file
 	

@@ -13,11 +13,11 @@
 using namespace std;
 
 /* Essentially the initializer.  Called right after the object is initialized in OnTargets object. */
-void OffScoring::loadCspr(csprRef *r, string endo_name, string cspr_file, string casper_file, int seq_l, int seed_l) {
+void OffScoring::loadCspr(csprRef *r, string endo_name, string cspr_file, string casper_file, int seq_l, int seed_l, string hsu) {
 	ref = r;
 	sequence_length = seq_l;
 	seed_length = seed_l;
-	fillHsumatrix(cspr_file, casper_file, endo_name);
+	fillHsumatrix(cspr_file, casper_file, endo_name, hsu);
 }
 
 

@@ -79,11 +79,11 @@ void OnTargets::loadData(string f_name, string dbfile) {
 
 
 /* This function generates off target scores for all of the sequences that were identifed in the inital searching function: FindSimilars */
-void OnTargets::ScoreSettings(string settings_filename, string output_filename, int mismatches, double thres, bool det, bool avg, string cspr_file, string endo_name) {
+void OnTargets::ScoreSettings(string settings_filename, string output_filename, int mismatches, double thres, bool det, bool avg, string cspr_file, string endo_name, string hsu) {
 	//FileOp sfile;
 	fileop.open(settings_filename);
 	scoreGenerator.settings(mismatches, thres, det, avg);
-	scoreGenerator.loadCspr(&ref, endo_name, cspr_file, settings_filename, seq_l, se_l);
+	scoreGenerator.loadCspr(&ref, endo_name, cspr_file, settings_filename, seq_l, se_l, hsu);
 	scoreGenerator.setOutputFile(output_filename);
 	fileop.closeFile();
 }
