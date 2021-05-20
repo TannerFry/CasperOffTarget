@@ -36,33 +36,33 @@ vector<string> split(string strToSplit, char delimeter)
 }
 
 //int argc, const char * argv[]
-int main() {
+int main(int argc, const char * argv[]) {
 	
 	//argv: query file, cspr file, db file, output file, CASPERinfo, num_mismatches, threshold, detailed ouptut (T/F), avg output (T/F)
-	vector<string> argv = {"EXE", "C:\\Users\\Tfry\\Desktop\\New_OT\\temp_uncomp.txt", "C:\\Users\\Tfry\\Desktop\\New_OT\\baccoa_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\New_OT\\baccoa_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\New_OT\\output.txt", "C:\\Users\\Tfry\\Desktop\\CASPERinfo", "5", "0.05", "TRUE", "FALSE"};
+	//vector<string> argv = { "OT_Win.exe", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\off_input.txt", "spCas9", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\temp_off.txt", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\CASPERinfo", "4", "0.05", "False", "True", "MATRIX:HSU MATRIX-spCas9-2013" };
 	//Convert all input into string objects:
 	string query_file = string(argv[1]);
-	string cspr_reference = string(argv[2]);
-	string sql_file = string(argv[3]);
-	string output_file = string(argv[4]);
-	string settings_file = string(argv[5]);
+	string endo_name = string(argv[2]);
+	string cspr_reference = string(argv[3]);
+	string sql_file = string(argv[4]);
+	string output_file = string(argv[5]);
+	string settings_file = string(argv[6]);
 	//Convert settings inputs into appropriate values:
-	int NUM_MISMATCHES = stoi(string(argv[6]));
-	double THRESHOLD = stod(string(argv[7]));
+	int NUM_MISMATCHES = stoi(string(argv[7]));
+	double THRESHOLD = stod(string(argv[8]));
 	bool detailed = false;
 	bool average = false;
-	if (string(argv[8]).find('T') != string::npos) {
+	if (string(argv[9]).find('T') != string::npos) {
 		detailed = true;
 	}
-	if (string(argv[9]).find('T') != string::npos) {
+	if (string(argv[10]).find('T') != string::npos) {
 		average = true;
 	}
+	string hsu = string(argv[11]);
+
 
 	//get seed_length and seq_length from CASPERinfo file using endo on .cspr file
 	ifstream file;
-	string endo_name = cspr_reference.substr(cspr_reference.find_last_of('\\') + 1, cspr_reference.size());
-	endo_name = endo_name.substr(0, endo_name.find('.'));
-	endo_name = endo_name.substr(endo_name.find('_') + 1, endo_name.size());
 	file.open(settings_file);
 	string str = "";
 	int i = 0;
@@ -87,14 +87,11 @@ int main() {
 	otr.se_l = seed_length;
 	otr.seq_l = sequence_length;
 
-	
 	otr.LoadTargetQuery(query_file);
 	otr.loadData(cspr_reference, sql_file);
 
+	otr.ScoreSettings(settings_file, output_file, NUM_MISMATCHES, THRESHOLD, detailed, average, cspr_reference, endo_name, hsu);
 
-	otr.ScoreSettings(settings_file, output_file, NUM_MISMATCHES, THRESHOLD, detailed, average, cspr_reference);
-
-	
 	otr.run_off_algorithm(16); // input should be the number of threads you want to generate and the output file
 	
 	cout << "All scores generated. Output file located at: " << output_file << endl;

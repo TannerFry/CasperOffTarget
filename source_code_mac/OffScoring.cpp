@@ -13,11 +13,11 @@
 using namespace std;
 
 /* Essentially the initializer.  Called right after the object is initialized in OnTargets object. */
-void OffScoring::loadCspr(csprRef *r, string cspr_file, string casper_file, int seq_l, int seed_l) {
+void OffScoring::loadCspr(csprRef *r, string endo_name, string cspr_file, string casper_file, int seq_l, int seed_l, string hsu) {
 	ref = r;
 	sequence_length = seq_l;
 	seed_length = seed_l;
-	fillHsumatrix(cspr_file, casper_file);
+	fillHsumatrix(cspr_file, casper_file, endo_name, hsu);
 }
 
 
@@ -53,17 +53,21 @@ double OffScoring::scorePutatives(set<long> offs, gRNA* onseq)
 {
 	
 	std::vector<offtarget> decomposed_offs;
+	//cout << offs.size() << endl;
+	int i = 0;
 	for (auto it = offs.begin(); it != offs.end(); ++it) 
 	{
+		//cout << i << "/" << offs.size() << endl;
+		i++;
 		offtarget myoff;
 		long id = *it;
 		// CHECK TO SEE IF MATCH IS IN THE REPEATS SECTION, THIS REQUIRES MULTIPLE FINAL SEQUENCES TO BE RETURNED:
 		if (id > ref->multiStart()) 
 		{
-			
 			string c_base_seq = ref->AccessRefString()->substr(id * sequence_length, seed_length);
 			// get the information from the multilocs vector
 			long multirelloc = id - ref->multiStart();  //finds the relative location of the sequence for getting multi information
+			
 			vector<string> curmultis = ref->getMultis(multirelloc);
 			// Loop to go through all the permutations in the curmultis vector to then put them into myoff and then into decomposed offs:
 			for (int j = 0; j < curmultis.size(); j++) 

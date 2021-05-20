@@ -3,7 +3,7 @@
 //  CasperOffTarget
 //
 //  Created by Brian Mendoza on 3/16/18.
-//  Copyright ï¿½ 2018 University of Tennessee. All rights reserved.
+//  Copyright © 2018 University of Tennessee. All rights reserved.
 //
 
 #include "pch.h"
@@ -79,11 +79,11 @@ void OnTargets::loadData(string f_name, string dbfile) {
 
 
 /* This function generates off target scores for all of the sequences that were identifed in the inital searching function: FindSimilars */
-void OnTargets::ScoreSettings(string settings_filename, string output_filename, int mismatches, double thres, bool det, bool avg, string cspr_file) {
+void OnTargets::ScoreSettings(string settings_filename, string output_filename, int mismatches, double thres, bool det, bool avg, string cspr_file, string endo_name, string hsu) {
 	//FileOp sfile;
 	fileop.open(settings_filename);
 	scoreGenerator.settings(mismatches, thres, det, avg);
-	scoreGenerator.loadCspr(&ref, cspr_file, settings_filename, seq_l, se_l);
+	scoreGenerator.loadCspr(&ref, endo_name, cspr_file, settings_filename, seq_l, se_l, hsu);
 	scoreGenerator.setOutputFile(output_filename);
 	fileop.closeFile();
 }
@@ -121,7 +121,7 @@ void OnTargets::run_off_algorithm(int thr)
 	std::cout << "Running Off Target Algorithm for " << base_seqs.size() << " sequences... " << endl;
 	vector<gRNA*> base = base_seqs;
 	/* Run 16 threads to get through all of the gRNAs in question */
-	r = strdup(ref.AccessRefString()->c_str());
+	r = _strdup(ref.AccessRefString()->c_str());
 	int i = 0;
 	int total_size = base.size();
 	scoreGenerator.seed_length = se_l;
@@ -137,6 +137,7 @@ void OnTargets::run_off_algorithm(int thr)
 	*/
 
 	//multi process
+	
 	while ((base.size() - i) / thr > 0) 
 	{
 		std::cout << "Percentage of sequences scored: " << (double(i) / double(base.size())) * 100 << "%" << std::endl;

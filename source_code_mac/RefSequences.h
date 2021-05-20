@@ -34,7 +34,7 @@ public:
 	void set_base_seqs(vector<gRNA*> x) { base_seqs = x; }
 
 	// calls the scoring algorithm iterating through putative_off_seqs (passed object is settings file)
-	void ScoreSettings(string, string, int, double, bool, bool, string);
+	void ScoreSettings(string, string, int, double, bool, bool, string, string, string);
 
 	//generic algorithm that loops through all targets calling findSimilars. Initiates threads. Iterates through base_seqs and scores them with the scoring algorithm
 	void run_off_algorithm(int);
