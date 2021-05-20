@@ -5,7 +5,7 @@
 //  Created by Brian Mendoza on 3/16/18.
 //  Copyright © 2018 University of Tennessee. All rights reserved.
 //
-
+#define strdup _strdup
 #include "pch.h"
 #include "RefSequences.h"
 #include <iostream>
@@ -121,7 +121,7 @@ void OnTargets::run_off_algorithm(int thr)
 	std::cout << "Running Off Target Algorithm for " << base_seqs.size() << " sequences... " << endl;
 	vector<gRNA*> base = base_seqs;
 	/* Run 16 threads to get through all of the gRNAs in question */
-	r = _strdup(ref.AccessRefString()->c_str());
+	r = strdup(ref.AccessRefString()->c_str());
 	int i = 0;
 	int total_size = base.size();
 	scoreGenerator.seed_length = se_l;
