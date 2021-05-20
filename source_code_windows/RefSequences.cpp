@@ -23,7 +23,7 @@
 #include <iomanip>
 
 using namespace std;
-char* r;
+const char* r;
 
 /* CONTAINER AND DATA MANIPULATION FUNCTIONS
  * loadData
@@ -121,7 +121,9 @@ void OnTargets::run_off_algorithm(int thr)
 	std::cout << "Running Off Target Algorithm for " << base_seqs.size() << " sequences... " << endl;
 	vector<gRNA*> base = base_seqs;
 	/* Run 16 threads to get through all of the gRNAs in question */
-	r = strdup(ref.AccessRefString()->c_str());
+
+	string ref_string_copy = *ref.AccessRefString();
+	r = ref_string_copy.c_str();
 	int i = 0;
 	int total_size = base.size();
 	scoreGenerator.seed_length = se_l;

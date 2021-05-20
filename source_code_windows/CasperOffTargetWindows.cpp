@@ -39,7 +39,7 @@ vector<string> split(string strToSplit, char delimeter)
 int main(int argc, const char * argv[]) {
 	
 	//argv: query file, cspr file, db file, output file, CASPERinfo, num_mismatches, threshold, detailed ouptut (T/F), avg output (T/F)
-	//vector<string> argv = { "OT_Win.exe", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\off_input.txt", "spCas9", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\temp_off.txt", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\CASPERinfo", "4", "0.05", "False", "True", "MATRIX:HSU MATRIX-spCas9-2013" };
+	//vector<string> argv = { "OT_Win.exe", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\OffTargetFolder\\temp.txt", "spCas9", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9.cspr", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\bs_ub_spCas9_repeats.db", "C:\\Users\\Tfry\\Desktop\\Recommended_CSPR_Files\\temp_off.txt", "C:\\Users\\Tfry\\Desktop\\CASPERapp\\CASPERinfo", "4", "0.05", "False", "True", "MATRIX:HSU MATRIX-spCas9-2013" };
 	//Convert all input into string objects:
 	string query_file = string(argv[1]);
 	string endo_name = string(argv[2]);
