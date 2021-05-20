@@ -48,7 +48,7 @@
 1. Download OT source code for Linux (in Repository)
 2. Open terminal
 3. CD to OT source code folder
-3. Run Command to compile OT: `g++ -std=c++11 CasperOffTargetWindows.cpp CSeqTranslate.cpp csprRef.cpp FileOp.cpp gRNA.cpp OffScoring.cpp pch.cpp RefSequences.cpp -pthread -lsqlite3 -lboost_system -lboost_iostreams -o OT`
+3. Run Command to compile OT: `g++ -std=c++11 *.cpp -pthread -lsqlite3 -lboost_system -lboost_iostreams -o OT`
 
 **Mac and Linux (if you manually built sqlite3 .o file, make sure sqlite3 .o file is in same folder as OT source code)**:
 1. Download OT source code for Mac or Linux (in Repository)
