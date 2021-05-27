@@ -21,6 +21,8 @@
 #include <math.h>
 #include <chrono>
 #include <iomanip>
+#include <cstring>
+#include <climits>
 
 using namespace std;
 const char* r;
