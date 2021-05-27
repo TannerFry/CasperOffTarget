@@ -98,12 +98,14 @@ private:
 		bool found = false;
 		while (getline(file, str)) 
 		{
+			
+			str.erase(remove(str.begin(), str.end(), '\n'), str.end());
 			if (str.find(hsu) != string::npos)
 			{	
 				found = true;
 				str.erase(remove(str.begin(), str.end(), '\n'), str.end());
 				getline(file,str);
-				while (str != "")
+				while (!str.empty())
 				{
 					float n;
 					stringstream stream(str);
@@ -160,6 +162,10 @@ private:
 					}
 					i += 1;
 					getline(file, str);
+					if(i == 12)
+					{
+						break;
+					}
 				}
 			}
 		}
