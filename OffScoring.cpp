@@ -3,7 +3,7 @@
 //  CasperOffTarget
 //
 //  Created by Brian Mendoza on 5/29/18.
-//  Copyright © 2018 University of Tennessee. All rights reserved.
+//  Copyright ï¿½ 2018 University of Tennessee. All rights reserved.
 //
 
 #include "pch.h"
@@ -24,7 +24,8 @@ void OffScoring::loadCspr(csprRef *r, string endo_name, string cspr_file, string
 /* This is the MAIN code for the scoring algorithm */
 void OffScoring::score(gRNA* myseq) {
 	//Need to get the full uncompressed sequence for each of the putative off sequences
-	double avgscore = 1 - scorePutatives(myseq->returnPutativeMatches(), myseq);
+	//double avgscore = 1 - scorePutatives(myseq->returnPutativeMatches(), myseq);
+	double avgscore = scorePutatives(myseq->returnPutativeMatches(), myseq);
 	std::string lineoutput = myseq->get_sequence() + ":";
 	if (IS_AVERAGE)
 	{
@@ -48,7 +49,7 @@ void OffScoring::score(gRNA* myseq) {
 /* The following functions define the scoring algorithm. */
 
 /* scorePutatives takes the ids of all putative off target sequences, and loads all of the uncompressed information into
- * an offtarget struct.  It then passes this struct to the individual scoring algorithm.*/
+ * atn offtarget struct.  I then passes this struct to the individual scoring algorithm.*/
 double OffScoring::scorePutatives(set<long> offs, gRNA* onseq) 
 {
 	
@@ -71,7 +72,7 @@ double OffScoring::scorePutatives(set<long> offs, gRNA* onseq)
 			vector<string> curmultis = ref->getMultis(multirelloc);
 			// Loop to go through all the permutations in the curmultis vector to then put them into myoff and then into decomposed offs:
 			for (int j = 0; j < curmultis.size(); j++) 
-			{
+		{
 				std::vector<std::string> ind_multi = S.Msplit(curmultis[j], ',');
 				myoff.chromscaff = std::stoi(ind_multi[0]);
 				myoff.position = stol(ind_multi[1]);
@@ -118,25 +119,29 @@ double OffScoring::scorePutatives(set<long> offs, gRNA* onseq)
 		}
 	}
 	// These variables are to keep track of the scores counted so that an average can be reported.
-	double score_tot = 1;
-	int score_num = 1;
+	double score_tot = 0;
+	int score_num = 0;
 
 	// Now go through all of the decomposed offs, score them and add them to the onseq offscore vector object
 	for (int i = 0; i < decomposed_offs.size(); i++) 
 	{
 		double singleScore = scoreStruct(decomposed_offs[i], onseq);
-		if (singleScore < 1.0) 
+		if (singleScore < 1.0 && singleScore != 0.0 && singleScore > 0.0) 
 		{
 			if (singleScore > THRESHOLD) 
 			{
 				onseq->addOffScore(singleScore, decomposed_offs[i].chromscaff, decomposed_offs[i].position, decomposed_offs[i].sequence);
-				
+				score_num++; // Iterate the score number only if the decomposed off passes the tolerance criteria
+				score_tot += singleScore; // Add individual off-target hit score to running total and divide by number of hits at end
 			}
-			score_tot += 1 - singleScore;
-			score_num++;
 		}
 	}
+	if (score_num == 0 && score_tot == 0) {
+		return score_tot;
+	}
+	else {
 	return score_tot / score_num;
+	}
 }
 
 /* The most basic scoring function.  Identifies mismatches of the decompressed strings.
@@ -158,7 +163,7 @@ double OffScoring::scoreStruct(offtarget oid, gRNA* on) {
 			mismatch_id.push_back(mstr);
 		}
 		if (mismatches.size() > MISMATCHES) {
-			return 1.0;
+			return 0.0;
 		}
 	}
 	/* From here the mismatch vector is sent to the subscoring functions and the score is tallied with the appropriate algorithmic combination. */
