@@ -70,9 +70,9 @@
 	* In Linker->General add `C:\Path\To\boost_1_73_0\stage\lib;C:\Path\To\sqlite;` to "Additional Library Directories"
 	* In Linker->Input add `C:\Path\To\sqlite\sqlite3.lib;` in "Additonaly Dependencies
 	* Make sure when you add these paths that there are ';' seperating all paths/object in the line.
-6. For debugging, make sure Debug and x86 are selected before running
+6. For debugging, make sure Debug and x64 are selected before running
 	* If debugging, make sure you set the debugging command arguments. See "How to run OT" below.
-7. For compiling, make sure Release and x86 are selected before running
+7. For compiling, make sure Release and x64 are selected before running
 	
 
 # **How to run OT**
